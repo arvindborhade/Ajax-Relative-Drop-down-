@@ -1,0 +1,48 @@
+<div class="form-group">
+<label class="col-sm-2 control-label">Catagory:</label>
+<div class="col-sm-10">
+	<select id="cid" onchange="myFunction()" name="catid"required>
+	<option value=" ">--Select Catagory--</option>
+		<?php foreach($productlist as $res){ ?>
+		
+		<option value="<?php echo$res['category_id'];?>"><?php echo$res['name'];?></option>
+		<?php }?>
+	</select>
+</div>
+</div>
+					
+<div class="form-group">
+	<label class="col-sm-2 control-label"> Product:</label>
+	<div class="col-sm-10">
+		<select name="product"id="sublist"required>
+		<option value="">---Select---</option>
+			
+		</select>
+	</div>
+</div>
+
+<script>
+			function myFunction() 
+			{
+				var  id= $.trim($("#cid").val());
+				$("select#sublist option").remove(); 
+				$.post( "", 
+						{ id: id } ,
+							
+						function( data ) {
+							var result = JSON.parse(data);
+							
+							var len=result.length;
+							for(var i=0;i<len;i++)
+							{ 
+								var x = document.getElementById("sublist");
+							   var option = document.createElement("option");
+							   option.text = result[i].model;//result['model'][i];
+							   option.value = result[i].product_id;//['product_id'][i];
+							   x.add(option);
+							}
+							});   
+			}
+			
+								
+		</script>
